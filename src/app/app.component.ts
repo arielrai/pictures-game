@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'jogo-das-fotos';
+  promptEvent = null;
+  constructor (){
+    window.addEventListener('beforeinstallprompt', event => {
+      this.promptEvent = event;
+    });
+  }
+  installPwa(): void {
+    alert('asd');
+    this.promptEvent.prompt();
+  }
 }
