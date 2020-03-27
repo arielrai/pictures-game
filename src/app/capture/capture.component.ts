@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit} from '@angular/core';
 import {Subject, Observable} from 'rxjs';
+import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 
 @Component({
   selector: 'app-capture',
@@ -7,56 +8,68 @@ import {Subject, Observable} from 'rxjs';
   styleUrls: ['./capture.component.css']
 })
 export class CaptureComponent implements OnInit {
-    @ViewChild('video', { static: true }) videoElement: ElementRef;
-    @ViewChild('canvas', { static: true }) canvas: ElementRef;
+  // toggle webcam on/off
+  public showWebcam = true;
+  public allowCameraSwitch = true;
+  public multipleWebcamsAvailable = false;
+  public deviceId: string;
+  public videoOptions: MediaTrackConstraints = {
+    // width: {ideal: 1024},
+    // height: {ideal: 576}
+  };
+  public errors: WebcamInitError[] = [];
 
-    videoWidth = 0;
-    videoHeight = 0;
-    constraints = {
-        video: {
-            facingMode: "environment",
-            width: { ideal: 4096 },
-            height: { ideal: 2160 }
-        }
-    };
+  // latest snapshot
+  public webcamImage: WebcamImage = null;
 
-    constructor(private renderer: Renderer2) {}
+  // webcam snapshot trigger
+  private trigger: Subject<void> = new Subject<void>();
+  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
-    ngOnInit() {
-        this.startCamera();
-    }
-
-    startCamera() {
-      alert('aeaa');
-      navigator.mediaDevices.getUserMedia(this.constraints)
-      .then(function(stream) {
-      alert('ae');
-      })
-      .catch(function(err) {
-        alert('deu ruim');
+  public ngOnInit(): void {
+    WebcamUtil.getAvailableVideoInputs()
+      .then((mediaDevices: MediaDeviceInfo[]) => {
+        this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
-        if (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-            navigator.mediaDevices.getUserMedia(this.constraints).then(this.attachVideo.bind(this)).catch(this.handleError);
-        } else {
-            alert('Sorry, camera not available.');
-        }
-    }
+  }
 
-    attachVideo(stream) {
-        this.renderer.setProperty(this.videoElement.nativeElement, 'srcObject', stream);
-        this.renderer.listen(this.videoElement.nativeElement, 'play', (event) => {
-            this.videoHeight = this.videoElement.nativeElement.videoHeight;
-            this.videoWidth = this.videoElement.nativeElement.videoWidth;
-        });
-    }
+  public triggerSnapshot(): void {
+    this.trigger.next();
+  }
 
-    capture() {
-        this.renderer.setProperty(this.canvas.nativeElement, 'width', this.videoWidth);
-        this.renderer.setProperty(this.canvas.nativeElement, 'height', this.videoHeight);
-        this.canvas.nativeElement.getContext('2d').drawImage(this.videoElement.nativeElement, 0, 0);
-    }
+  public toggleWebcam(): void {
+    this.showWebcam = !this.showWebcam;
+  }
 
-    handleError(error) {
-        console.log('Error: ', error);
-    }
+  public handleInitError(error: WebcamInitError): void {
+    this.errors.push(error);
+  }
+
+  public showNextWebcam(directionOrDeviceId: boolean|string): void {
+    // true => move forward through devices
+    // false => move backwards through devices
+    // string => move to device with given deviceId
+    this.nextWebcam.next(directionOrDeviceId);
+  }
+
+  public handleImage(webcamImage: WebcamImage): void {
+    console.info('received webcam image', webcamImage);
+    this.webcamImage = webcamImage;
+  }
+
+  public cameraWasSwitched(deviceId: string): void {
+    console.log('active device: ' + deviceId);
+    this.deviceId = deviceId;
+  }
+
+  public get triggerObservable(): Observable<void> {
+    return this.trigger.asObservable();
+  }
+
+  public get nextWebcamObservable(): Observable<boolean|string> {
+    return this.nextWebcam.asObservable();
+  }
+
+
 }
