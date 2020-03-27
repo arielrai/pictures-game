@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="card">
+    <div class="card" id="webcamBox">
       <div class="card-header h5" *ngIf="!webcamImage">
         Take a picture of the object!
       </div>
@@ -9,7 +9,7 @@
       </div>
       <div class="card-body h6">
         <div *ngIf="!webcamImage">
-          <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+          <webcam id="webcam" [height]="380" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
                   [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
                   [videoOptions]="videoOptions"
                   [imageQuality]="1"
