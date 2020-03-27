@@ -1,24 +1,27 @@
 <div class="container-fluid">
-  <div style="text-align:center">
-    <div>
-      <div *ngIf="!webcamImage">
-        <h2>
-          Take a picture of the object!
-        </h2>
-        <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
-                [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-                [videoOptions]="videoOptions"
-                [imageQuality]="1"
-                (cameraSwitched)="cameraWasSwitched($event)"
-                (initError)="handleInitError($event)"
-        ></webcam>
+  <div class="row">
+    <div class="card">
+      <div class="card-header h5" *ngIf="!webcamImage">
+        Take a picture of the object!
       </div>
-      <div class="snapshot" *ngIf="webcamImage">
-        <h2>Nice one!</h2>
-        <img class="img-fluid" [src]="webcamImage.imageAsDataUrl"/>
+      <div class="card-header h5" *ngIf="webcamImage">
+        Nice one!
       </div>
-      <br/>
-      <div class="btn-group row col-sm-12" role="group" aria-label="Basic example">
+      <div class="card-body h6">
+        <div *ngIf="!webcamImage">
+          <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                  [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                  [videoOptions]="videoOptions"
+                  [imageQuality]="1"
+                  (cameraSwitched)="cameraWasSwitched($event)"
+                  (initError)="handleInitError($event)"
+          ></webcam>
+        </div>
+        <div class="snapshot" *ngIf="webcamImage">
+          <img class="img-fluid" [src]="webcamImage.imageAsDataUrl"/>
+        </div>
+      </div>
+      <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" *ngIf="webcamImage" class="btn btn-info" (click)="retriggerSnapshot();">Take another picture</button>
         <button type="button" *ngIf="!webcamImage" class="btn btn-primary" (click)="triggerSnapshot();">Take a picture</button>
         <button type="button" *ngIf="webcamImage" class="btn btn-primary">Continue</button>
