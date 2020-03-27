@@ -7,6 +7,6 @@ production:
         - apt-get update -qy
         - apt-get install -y ruby-dev
         - gem install dpl
-        - dpl --provider=heroku --app=favourlab --api-key=$HEROKU_API_KEY
+        - dpl --provider=heroku --app=pictures-game --api-key=$HEROKU_API_KEY
     only:
         - master  #branch name to deploy on heroku
