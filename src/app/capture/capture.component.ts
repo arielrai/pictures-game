@@ -74,5 +74,8 @@ export class CaptureComponent implements OnInit {
     return this.nextWebcam.asObservable();
   }
 
+  public saveImage(){
+    window.localStorage.setItem('image', this.webcamImage.imageAsDataUrl);
+  }
 
 }

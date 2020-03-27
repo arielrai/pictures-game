@@ -9,7 +9,7 @@
       </div>
       <div class="card-body h6">
         <div *ngIf="!webcamImage">
-          <webcam id="webcam" [height]="380" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+          <webcam id="webcam" [height]="380" [width]="380" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
                   [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
                   [videoOptions]="videoOptions"
                   [imageQuality]="1"
@@ -24,7 +24,8 @@
       <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" *ngIf="webcamImage" class="btn btn-info" (click)="retriggerSnapshot();">Take another picture</button>
         <button type="button" *ngIf="!webcamImage" class="btn btn-primary" (click)="triggerSnapshot();">Take a picture</button>
-        <button type="button" *ngIf="webcamImage" class="btn btn-primary">Continue</button>
+        <a href="/game" class="btn btn-primary" *ngIf="webcamImage" (click)="saveImage();" type="submit">Next</a>
+
       </div>
     </div>
   </div>

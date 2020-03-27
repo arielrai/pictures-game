@@ -11,11 +11,13 @@ import { HomeComponent } from './home/home.component';
 import { CaptureComponent } from './capture/capture.component';
 import {WebcamModule} from 'ngx-webcam';
 import {FormsModule} from '@angular/forms';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CaptureComponent
+    CaptureComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
