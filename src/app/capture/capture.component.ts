@@ -31,6 +31,9 @@ export class CaptureComponent implements OnInit {
     WebcamUtil.getAvailableVideoInputs()
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+        if (this.multipleWebcamsAvailable) {
+          this.showNextWebcam(mediaDevices[1].deviceId);
+        }
       });
   }
 
