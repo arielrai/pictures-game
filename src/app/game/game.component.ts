@@ -41,7 +41,7 @@ export class GameComponent implements OnInit {
     this.startedGame = true;
     if (this.filter == "default") {
       alert('Please select a filter!')
-    } else if (this.time == null) {
+    } else if (this.time == null || this.time == 0) {
       alert('Please inform for how long do you want to play!')
     } else {
       var game;
