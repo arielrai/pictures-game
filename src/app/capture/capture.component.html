@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="card" id="webcamBox">
+    <div class="card fade-component mt-n1">
       <div class="card-header h5" *ngIf="!webcamImage">
         Take a picture of the object!
       </div>
@@ -22,8 +22,8 @@
         </div>
       </div>
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" *ngIf="webcamImage" class="btn btn-info" (click)="retriggerSnapshot();">Take another picture</button>
-        <button type="button" *ngIf="!webcamImage" class="btn btn-primary" (click)="triggerSnapshot();">Take a picture</button>
+        <a type="button" *ngIf="webcamImage" class="btn btn-info" (click)="retriggerSnapshot();">Take another picture</a>
+        <a type="button" *ngIf="!webcamImage" class="btn btn-primary" (click)="triggerSnapshot();">Take a picture</a>
         <a href="/game" class="btn btn-primary" *ngIf="webcamImage" (click)="saveImage();" type="submit">Next</a>
 
       </div>

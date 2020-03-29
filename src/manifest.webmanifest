@@ -1,8 +1,8 @@
 {
-  "name": "jogo-das-fotos",
-  "short_name": "jogo-das-fotos",
+  "name": "Treasure hunt",
+  "short_name": "Treasure hunt",
   "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "background_color": "#d2e2e0",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

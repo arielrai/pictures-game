@@ -1,15 +1,33 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="card">
+    <div class="card fade-component mt-n1">
       <div class="card-header h5" >
-        Time to play
+        Time to play!
       </div>
       <div class="card-body h6">
         <div id="canvas"></div>
-      </div>
-      <hr>
-      <p id="timer"></p>
-      <div class="btn-group" role="group" aria-label="Basic example">
+        <hr>
+        <div class="form-row" role="group" aria-label="Basic example">
+          <div class="col-6" *ngIf="!startedGame">
+            <select class="custom-select" [(ngModel)]="filter">
+              <option value="default" >Select filter</option>
+              <option value="swirl">Swirl</option>
+              <option value="blur">Blur</option>
+              <option value="contrast">Contrast</option>
+            </select>
+          </div>
+          <div class="form-group col-6"  *ngIf="!startedGame">
+            <input type="number" class="form-control" placeholder="Minutes e.g. 5" [(ngModel)]="time">
+          </div>
+          <a type="button" *ngIf="!startedGame" (click)="startGame()" class="btn btn-primary col-12">Start!</a>
+          <span class="h5 col-6" *ngIf="startedGame && wonGame == null">Find it!</span>
+          <span class="h5 col-6" *ngIf="startedGame && endedGame && wonGame">You win! :)</span>
+          <span class="h5 col-6" *ngIf="startedGame && endedGame && !wonGame">You lose! :(</span>
+          <p class="col-6 h5" id="countDown"></p>
+          <a type="button" *ngIf="startedGame && !endedGame" (click)="found()" class="btn btn-success col-12">Found it!</a>
+          <hr>
+          <a type="button" href="/capture" *ngIf="wonGame != null" class="btn btn-info col-12">Play again!</a>
+        </div>
       </div>
     </div>
   </div>

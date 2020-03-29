@@ -1,2 +1,14 @@
 @import '@angular/material/prebuilt-themes/pink-bluegrey.css';
 @import "~bootstrap/dist/css/bootstrap.css";
+
+.fade-component {
+    margin-top: 25px;
+    font-size: 21px;
+    text-align: center;
+
+    -webkit-animation: fadein 3s !important; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 3s !important; /* Firefox < 16 */
+        -ms-animation: fadein 3s !important; /* Internet Explorer */
+         -o-animation: fadein 3s !important; /* Opera < 12.1 */
+            animation: fadein 3s !important;
+}
