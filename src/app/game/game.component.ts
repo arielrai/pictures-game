@@ -124,9 +124,11 @@ export class GameComponent implements OnInit {
   }
 
   found() {
-    clearInterval(this.timer);
-    this.draw = this.canvas.draw(this.texture, 313, 418).update();
-    this.wonGame = true;
-    this.endedGame = true;
+    if (confirm("Are you sure you've found the object? By confirming this, all the filters are going to be removed.")) {
+      clearInterval(this.timer);
+      this.draw = this.canvas.draw(this.texture, 313, 418).update();
+      this.wonGame = true;
+      this.endedGame = true;
+    }
   }
 }
